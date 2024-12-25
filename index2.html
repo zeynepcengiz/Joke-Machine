@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Şaka Makinesi</title>
+</head>
+
+<body>
+    <h1>Şaka Makinesi</h1>
+    <button type="button" id="button">Şaka Makinesini Çalıştırmak için Tıklayınız.</button>
+    <p id="joke"></p>
+    <script>
+        document.getElementById('button').addEventListener('click', function () {
+            fetch('https://official-joke-api.appspot.com/random_joke') <!-- Url hatan Fixlendi-->
+                .then(response => {
+                    if (!response.ok) { // HTTP hata kontrolü
+                        throw new Error(`HTTP Hatası! Durum Kodu: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('joke').innerText = data.setup + "..." + data.punchline;
+                })
+                .catch(error => { // Hata yakalandığında alert ve console gösterimi
+                    console.error('Error:', error);
+                    alert('Bir hata oluştu: ' + error.message);
+                });
+        });
+    </script>
+</body>
+
+</html>
